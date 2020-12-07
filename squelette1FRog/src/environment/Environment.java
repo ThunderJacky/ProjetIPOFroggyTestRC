@@ -15,7 +15,7 @@ public class Environment implements IEnvironment {
 
     public Environment(Game game) {
         this.game = game;
-        this.Lines = new ArrayList<();
+        this.Lines = new ArrayList();
         this.Lines.add(new Lane(game,0,0.0D));
 
         for(int i = 1; i < game.height-1; i++) {
