@@ -1,9 +1,9 @@
 package environment;
 
 import java.util.ArrayList;
-
 import util.Case;
 import gameCommons.Game;
+import java.util.Iterator;
 
 public class Lane {
 	private Game game;
@@ -12,28 +12,76 @@ public class Lane {
 	private ArrayList<Car> cars = new ArrayList<>();
 	private boolean leftToRight;
 	private double density;
+	private int temps;
 
-	public Lane(Game game, int i, double v) {
+	public Lane(Game game, int ord, double density) {
+		this.game = game;
+		this.ord = ord;
+		this.speed = game.randomGen.nextInt(game.minSpeedInTimerLoops) + 1;
+		this.leftToRight = game.randomGen.nextBoolean();
+		this.density = density;
+		for(int i = 0; i < 4 * game.width; i++) {
+			this.move(true);
+			this.mayAddCar();
+		}
 	}
 
-	// TODO : Constructeur(s)
+	public Lane(Game game, int ord) {
+		this(game, ord, game.defaultDensity);
+	}
 
 	public void update() {
-
-		// TODO
-
-		// Toutes les voitures se d�placent d'une case au bout d'un nombre "tic
-		// d'horloge" �gal � leur vitesse
+		this.temps++;
+		if(this.temps != this.speed) {// Toutes les voitures se d�placent d'une case au bout d'un nombre "tic
+			this.move(false);  // d'horloge" �gal � leur vitesse
+		} else {
+			this.move(true);
+			this.mayAddCar();  // A chaque tic d'horloge, une voiture peut �tre ajout�e
+			this.temps = 0;
+		}
 		// Notez que cette m�thode est appel�e � chaque tic d'horloge
-
 		// Les voitures doivent etre ajoutes a l interface graphique meme quand
 		// elle ne bougent pas
 
-		// A chaque tic d'horloge, une voiture peut �tre ajout�e
-
 	}
 
-	// TODO : ajout de methodes
+	public boolean isSafe(Case c) {
+		Iterator i = this.cars.iterator();
+		while(i.hasNext()) {
+			Car car = (Car)i.next();
+			if(car.surCase(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	private void move(boolean b) {
+		Iterator i = this.cars.iterator();
+		while(i.hasNext()) {
+			Car car = (Car)i.next();
+			car.move(b);
+		}
+		this.enlever();
+	}
+
+	private void enlever() {
+		ArrayList<Car> retirer = new ArrayList();
+		Iterator i = this.cars.iterator();
+		Car car;
+		while(i.hasNext()) {
+			car = (Car)i.next();
+			if (!car.pop()) {
+				retirer.add(car);
+			}
+		}
+		i = retirer.iterator();
+		while(i.hasNext()) {
+			car = (Car)i.next();
+			this.cars.remove(car);
+		}
+	}
 
 	/*
 	 * Fourni : mayAddCar(), getFirstCase() et getBeforeFirstCase() 

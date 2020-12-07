@@ -106,7 +106,9 @@ public class Game {
 		environment.update();
 		this.graphic.add(new Element(frog.getPosition(), Color.GREEN));
 		testLose();
+		//if (testLose()) { On voulait faire une fonction pour recommencer la partie sans fermer le jeu
 		testWin();
+		//if (testWin()) {
 	}
 
 }

@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import environment.Environment;
+import environment.Environment; //Partie 2
 import frog.Frog;
-import givenEnvironment.GivenEnvironment;
+import givenEnvironment.GivenEnvironment; //Partie 1
 import graphicalElements.FroggerGraphic;
 import graphicalElements.IFroggerGraphics;
 
@@ -32,8 +32,8 @@ public class Main {
 		graphic.setFrog(frog);
 		frog.getPosition().absc = (width/2)-1;
 		//Cr�ation et liaison de l'environnement
-		IEnvironment env = new GivenEnvironment(game);
-		//IEnvironment env = new Environment(game);  //Partie 2
+		//IEnvironment env = new GivenEnvironment(game); //Partie 1
+		IEnvironment env = new Environment(game);  //Partie 2
 		game.setEnvironment(env);
 				
 		//Boucle principale : l'environnement s'acturalise tous les tempo milisecondes

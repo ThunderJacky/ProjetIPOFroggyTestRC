@@ -36,7 +36,7 @@ public class Frog implements IFrog {
 				this.myPosition.ord -= 1;
 				this.dir = down;
 			}
-		} else if (key.equals(up)) {
+		} else if (key.equals(up)) { // Pas besoin de limite car le jeu s'arrete avant
 			this.myPosition.ord += 1;
 			this.dir = up;
 		} else if (key.equals(Direction.left)) {

@@ -2,12 +2,10 @@ package environment;
 
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
-
 import util.Case;
 import gameCommons.Game;
 import gameCommons.IEnvironment;
 import java.util.Iterator;
-import java.util.ArrayList;
 
 public class Environment implements IEnvironment {
     private Game game;
@@ -15,7 +13,7 @@ public class Environment implements IEnvironment {
 
     public Environment(Game game) {
         this.game = game;
-        this.Lines = new ArrayList<();
+        this.Lines = new ArrayList();
         this.Lines.add(new Lane(game,0,0.0D));
 
         for(int i = 1; i < game.height-1; i++) {
@@ -25,12 +23,21 @@ public class Environment implements IEnvironment {
         this.Lines.add(new Lane(game, game.height-1, 0.0D ));
     }
 
-    public boolean isWinningPosition(Case c) {
+ /*   public boolean isWinningPosition(Case c) { ///////Pas besoin car égal à testWin()
         return c.ord == this.game.height-1;
     }
-
+*/
     public boolean isSafe(Case c) {
-        return ((Lane)this.Lines.get(c.ord)).isSafe(c);
+        return this.Lines.get(c.ord).isSafe(c);
     }
+
+    public void update() {
+        Iterator i = this.Lines.iterator();
+        while(i.hasNext()) {
+            Lane lane = (Lane)i.next();
+            lane.update();
+        }
+    }
+
 
 }
